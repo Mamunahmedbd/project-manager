@@ -29,18 +29,22 @@ export default function Teams() {
   } else if (!isLoading && !isError && teams?.length === 0) {
     content = <h1 className="m-2 text-center">No Team found!</h1>;
   } else if (!isLoading && !isError && teams?.length > 0) {
-    content = teams.map((team) => (
-      <Team
-        key={team.id}
-        id={team.id}
-        name={team.name}
-        category={team.category}
-        description={team.description}
-        participants={team.participants}
-        owner={team.owner}
-        lastDate={moment(team.timestamp).format("LL")}
-      />
-    ));
+    content = teams
+      .slice()
+      .sort((a, b) => a.timestamp - b.timestamp)
+      .reverse()
+      .map((team) => (
+        <Team
+          key={team.id}
+          id={team.id}
+          name={team.name}
+          category={team.category}
+          description={team.description}
+          participants={team.participants}
+          owner={team.owner}
+          lastDate={moment(team.timestamp).format("LL")}
+        />
+      ));
   }
 
   return (

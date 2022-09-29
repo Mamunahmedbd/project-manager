@@ -1,28 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useGetProjectQuery } from "../../features/project/projectApi";
+import Error from "../ui/Error";
 
 import ItemContainer from "./ItemContainer";
 
 const Columns = () => {
-  const { data: loadData, isError, isSuccess } = useGetProjectQuery();
+  const { data, isError, isLoading, error } = useGetProjectQuery();
 
-  const [containers, setContainers] = useState([]);
-  useEffect(() => {
-    if (loadData) {
-      setContainers(loadData);
-    }
-  }, [loadData]);
+  let content = null;
 
-  return (
-    <div className="flex flex-grow px-10 mt-4 space-x-6 overflow-auto">
-      <ItemContainer containers={containers} stage="Backlog" />
-      <ItemContainer containers={containers} stage="Ready" />
-      <ItemContainer containers={containers} stage="Doing" />
-      <ItemContainer containers={containers} stage="Review" />
-      <ItemContainer containers={containers} stage="Blocked" />
-      <ItemContainer containers={containers} stage="Done" />
-    </div>
-  );
+  if (isLoading) {
+    content = <h1 className="m-2 text-center">Loading...</h1>;
+  } else if (!isLoading && isError) {
+    content = (
+      <h1 className="m-2 text-center">
+        <Error message={error?.data} />
+      </h1>
+    );
+  } else if (!isLoading && !isError && data?.length === 0) {
+    content = <h1 className="m-2 text-center">No Team found!</h1>;
+  } else if (!isLoading && !isError && data?.length > 0) {
+    content = (
+      <div className="flex flex-grow px-10 mt-4 space-x-6 overflow-auto">
+        <ItemContainer containers={data} stage="Backlog" />
+        <ItemContainer containers={data} stage="Ready" />
+        <ItemContainer containers={data} stage="Doing" />
+        <ItemContainer containers={data} stage="Review" />
+        <ItemContainer containers={data} stage="Blocked" />
+        <ItemContainer containers={data} stage="Done" />
+      </div>
+    );
+  }
+
+  return content;
 };
 
 export default Columns;

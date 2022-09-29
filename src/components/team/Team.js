@@ -1,9 +1,10 @@
 import gravatarUrl from "gravatar-url";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDeleteTeamMutation } from "../../features/teams/teamsApi";
 import EditTeam from "./EditTeam";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function Team({
   id,
   name,
@@ -16,7 +17,7 @@ export default function Team({
   const { user: loggedInUser } = useSelector((state) => state.auth) || {};
   const { email: myEmail } = loggedInUser || {};
   const [opened, setOpened] = useState(false);
-  const [deleteTeam] = useDeleteTeamMutation();
+  const [deleteTeam, { isSuccess }] = useDeleteTeamMutation();
 
   const teamByColor = (teamName) => {
     switch (teamName) {
@@ -32,6 +33,12 @@ export default function Team({
         return "text-gray-500 bg-gray-100";
     }
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.info("Delete Successfully");
+    }
+  }, [isSuccess]);
 
   const controlModal = () => {
     setOpened((prevState) => !prevState);

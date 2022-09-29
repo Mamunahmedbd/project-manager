@@ -5,7 +5,7 @@ import CreateProject from "./CreateProject";
 import Card from "./Card";
 
 const ItemContainer = ({ stage, containers }) => {
-  const [dropItem, { isSuccess }] = useDropItemMutation();
+  const [dropItem] = useDropItemMutation();
   const filteredProjects = containers.filter(
     (project) => project.stage === stage
   );
@@ -67,13 +67,17 @@ const ItemContainer = ({ stage, containers }) => {
           isOver ? "bg-indigo-300" : "bg-indigo-100"
         }`}
       >
-        {filteredProjects.map((container) => (
-          <Card
-            stage={container.stage}
-            key={container.id}
-            container={container}
-          />
-        ))}
+        {filteredProjects
+          .slice()
+          .sort((a, b) => a.timestamp - b.timestamp)
+          .reverse()
+          .map((container) => (
+            <Card
+              stage={container.stage}
+              key={container.id}
+              container={container}
+            />
+          ))}
       </div>
     </div>
   );

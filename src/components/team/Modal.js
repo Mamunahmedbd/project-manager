@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useAddTeamMutation } from "../../features/teams/teamsApi";
-
 import Error from "../ui/Error";
 
 export default function Modal({ open, control }) {
@@ -107,7 +106,7 @@ export default function Modal({ open, control }) {
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500"
                 disabled={isLoading}
               >
-                create team
+                Create team
               </button>
             </div>
             {isError && <Error message={error} />}

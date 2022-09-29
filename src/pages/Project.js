@@ -2,6 +2,7 @@ import React from "react";
 import Footer from "../components/ui/Footer";
 import MainColumn from "../components/reactDnd/MainColumn";
 import Navigation from "../components/team/Navigation";
+import { ToastContainer } from "react-toastify";
 
 export default function Project() {
   return (
@@ -14,6 +15,7 @@ export default function Project() {
         <MainColumn />
       </div>
       <Footer />
+      <ToastContainer />
     </>
   );
 }

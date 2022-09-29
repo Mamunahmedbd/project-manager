@@ -14,7 +14,7 @@ export default function Modal({ id, open, control }) {
   const dispatch = useDispatch();
   const [responseError, setResponseError] = useState("");
   const [existingUser, setExistingUser] = useState("");
-  const [conversation, setConversation] = useState(undefined);
+  const [targetUser, setTargetUser] = useState(undefined);
   const navigate = useNavigate();
   const { data: participant } = useGetUserQuery(to, {
     skip: !userCheck,
@@ -28,7 +28,7 @@ export default function Modal({ id, open, control }) {
         .unwrap()
         .then((data) => {
           const targetData = data.find((d) => d.id === id);
-          setConversation(targetData);
+          setTargetUser(targetData);
         })
         .catch((err) => {
           setResponseError("There was a problem!");
@@ -36,7 +36,6 @@ export default function Modal({ id, open, control }) {
     }
   }, [participant, dispatch, myEmail, id]);
 
-  // listen conversation add/edit success
   useEffect(() => {
     if (isSuccess) {
       control();
@@ -75,13 +74,13 @@ export default function Modal({ id, open, control }) {
     );
     if (!findEmail) {
       editTeam({
-        id: conversation?.id,
+        id: targetUser?.id,
         data: {
           owner: myEmail,
-          participants: [...conversation?.participants, participant[0].email],
-          name: conversation?.name,
-          description: conversation?.description,
-          category: conversation?.category,
+          participants: [...targetUser?.participants, participant[0].email],
+          name: targetUser?.name,
+          description: targetUser?.description,
+          category: targetUser?.category,
           timestamp: new Date().getTime(),
         },
       });
@@ -129,11 +128,11 @@ export default function Modal({ id, open, control }) {
                 type="submit"
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500"
                 disabled={
-                  conversation === undefined ||
+                  targetUser === undefined ||
                   (participant?.length > 0 && participant[0].email === myEmail)
                 }
               >
-                Send Message
+                Add a member
               </button>
             </div>
 

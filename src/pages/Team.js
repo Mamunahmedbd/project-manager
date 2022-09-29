@@ -3,6 +3,7 @@ import AddTeam from "../components/team/AddTeam";
 import Navigation from "../components/team/Navigation";
 import Teams from "../components/team/Teams";
 import Footer from "../components/ui/Footer";
+import { ToastContainer } from "react-toastify";
 
 export default function Team() {
   return (
@@ -13,6 +14,7 @@ export default function Team() {
         <Teams />
       </div>
       <Footer />
+      <ToastContainer />
     </>
   );
 }
