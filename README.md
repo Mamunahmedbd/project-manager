@@ -1,4 +1,4 @@
-# Project Plan - Chat Application with RTK Query
+# Project Plan - Project Manager with RTK Query
 
 ## Requirement Analysis
 
