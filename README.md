@@ -26,8 +26,3 @@
 2. login
 3. get list of users other than requesting user
 4. update conversation
-5. insert conversation
-6. find conversation
-7. list conversation
-8. list messages by conversation id
-9. send message (insert messages into messages table)
